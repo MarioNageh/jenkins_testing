@@ -11,13 +11,13 @@ pipeline {
         stage('Run FastAPI Application') {
             steps {
                 script {
-                    docker.image('fastapi-app').run('-p 8775:8000').start()
+                    docker.image('fastapi-app').run('-p 8775:8000')
                 }
             }
             post {
                 success {
                     script {
-                        echo 'FastAPI application is running on http://<your-server-ip>:8000'
+                        echo 'FastAPI application is running on http://<your-server-ip>:8775'
                     }
                 }
             }

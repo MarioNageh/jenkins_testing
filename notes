@@ -1,0 +1,49 @@
+Docker
+Docker Pipeline
+
+
+docker run -d \
+--name my-jenkins \
+-v $(which docker):/usr/bin/docker \
+-v /var/jenkins_home:/var/jenkins_home \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-p 8770:8080 \
+jenkins/jenkins:lts
+
+
+
+
+docker build -t myjenkins-blueocean:2.414.2 -f Dockerfile_je .
+docker network create jenkins
+
+docker run --name jenkins-blueocean --restart=on-failure --detach \
+--network jenkins --env DOCKER_HOST=tcp://docker:2376 \
+--env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
+--publish 8770:8080 --publish 50000:50000 \
+--volume /var/jenkins_homee:/var/jenkins_home \
+--volume /var/run/docker.sock:/var/run/docker.sock \
+myjenkins-blueocean:2.414.2
+
+
+--volume jenkins-docker-certs:/certs/client:ro \
+
+
+
+
+docker pull jenkins/jenkins
+
+docker run -p 8770:8080 -p 50000:50000 -v /var/jenkins_homee:/var/jenkins_home jenkins/jenkins
+
+
+
+
+
+
+
+
+docker build -t my-jenkins-agent -f Dockerfile_ag .
+
+docker run -d --name my-jenkins-agent \
+  --network jenkins \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  my-jenkins-agent -url http://loving_hawking:8080 -workDir "/var/jenkins_homee/workspace" abcd1234 docker-agent
