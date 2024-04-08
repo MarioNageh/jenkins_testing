@@ -11,7 +11,7 @@ pipeline {
         stage('Run FastAPI Application') {
             steps {
                 script {
-                    docker.image('fastapi-app').run('-p 8775:8000')
+                    docker.image('fastapi-app').run('-p 8776:8000')
                 }
             }
             post {
