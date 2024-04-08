@@ -11,7 +11,9 @@ pipeline {
         stage('Run FastAPI Application') {
             steps {
                 script {
-                    docker.image('fastapi-app').run('-p 8775:8000')
+                    sh 'docker stop fastapi-app-container || true'
+                    sh 'docker rm fastapi-app-container || true'
+                    docker.image('fastapi-app').run('--name fastapi-app-container -p 8775:8000')
                 }
             }
             post {
